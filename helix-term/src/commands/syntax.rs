@@ -110,7 +110,7 @@ impl UriOrDocumentId {
     fn path_or_id(&self) -> Option<PathOrId<'_>> {
         match self {
             Self::Id(id) => Some(PathOrId::Id(*id)),
-            Self::Uri(uri) => uri.as_path().map(|path| PathOrId::Path(path.into())),
+            Self::Uri(uri) => uri.as_path().map(PathOrId::Path),
         }
     }
 }
