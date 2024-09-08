@@ -257,6 +257,8 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
             "g" => document_change_picker,
             "G" => changed_file_picker,
             "a" => code_action,
+            "A" => add_word_to_personal_dictionary,
+            "Z" => suggest_spelling_correction,
             "'" => last_picker,
             "!" => { "Debug (experimental)" sticky=true
                 "l" => dap_launch,
