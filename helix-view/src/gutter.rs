@@ -73,26 +73,16 @@ pub fn diagnostic<'doc>(
                             .language_servers_with_feature(LanguageServerFeature::Diagnostics)
                             .any(|ls| ls.id() == d.provider)
                 });
-            diagnostics_on_line
-                .max_by_key(|d| d.severity)
-                .map(|d| match d.severity {
-                    Some(Severity::Error) => {
-                        write!(out, "■").ok();
-                        error
-                    }
-                    Some(Severity::Warning) | None => {
-                        write!(out, "▲").ok();
-                        warning
-                    }
-                    Some(Severity::Info) => {
-                        write!(out, "●").ok();
-                        info
-                    }
-                    Some(Severity::Hint) => {
-                        write!(out, "○").ok();
-                        hint
-                    }
-                })
+            diagnostics_on_line.max_by_key(|d| d.severity).map(|d| {
+                let severity = d.severity();
+                out.push_str(severity.indicator());
+                match severity {
+                    Severity::Error => error,
+                    Severity::Warning => warning,
+                    Severity::Info => info,
+                    Severity::Hint => hint,
+                }
+            })
         },
     )
 }
